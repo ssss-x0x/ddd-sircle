@@ -7,6 +7,7 @@ import {
   CircleUpdateCommand,
 } from "../commands";
 import { CircleName, CircleId } from "../../domain/models";
+import { CircleFullSpecification } from "../../domain/specifications";
 
 export class CircleApplicationService {
   constructor(
@@ -87,6 +88,18 @@ export class CircleApplicationService {
 
     if (!circle) {
       throw new Error("CircleNotFoundException");
+    }
+
+    if (circle.members.some((userId) => userId === command.user.id)) {
+      throw new Error("User is already a member of this circle.");
+    }
+
+    const circleSpecifications = new CircleFullSpecification(
+      this.userRepository
+    );
+
+    if (circleSpecifications.isSatisfiedBy(circle)) {
+      throw new Error("Circle is full.");
     }
 
     circle.join(member);

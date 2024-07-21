@@ -7,7 +7,7 @@ export class Circle {
   public id: CircleId;
   public name: CircleName;
   public owner: UserId;
-  private members: UserId[];
+  public members: UserId[];
 
   constructor(
     id: CircleId,
@@ -54,18 +54,6 @@ export class Circle {
   }
 
   join(user: User) {
-    if (!user) {
-      throw new Error("user cannot be null or undefined");
-    }
-
-    if (this.members.some((userId) => userId === user.id)) {
-      throw new Error("User is already a member of this circle.");
-    }
-
-    if (this.isFull()) {
-      throw new Error("Circle is full.");
-    }
-
     this.members.push(user.id);
   }
 }
