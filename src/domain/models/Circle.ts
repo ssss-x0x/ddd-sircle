@@ -1,6 +1,4 @@
-import { CircleId } from ".";
-import { CircleName } from ".";
-import { User } from ".";
+import { CircleId, CircleName, User, UserId } from ".";
 
 /**
  * サークルを表現するエンティティ
@@ -8,10 +6,15 @@ import { User } from ".";
 export class Circle {
   public id: CircleId;
   public name: CircleName;
-  public owner: User;
-  private members: User[];
+  public owner: UserId;
+  private members: UserId[];
 
-  constructor(id: CircleId, name: CircleName, owner: User, members: User[]) {
+  constructor(
+    id: CircleId,
+    name: CircleName,
+    owner: UserId,
+    members: UserId[]
+  ) {
     if (!id) {
       throw new Error("id cannot be null or undefined");
     }
@@ -43,7 +46,7 @@ export class Circle {
       throw new Error("user cannot be null or undefined");
     }
 
-    if (this.members.some((member) => member.id === user.id)) {
+    if (this.members.some((userId) => userId === user.id)) {
       throw new Error("User is already a member of this circle.");
     }
 
@@ -51,6 +54,14 @@ export class Circle {
       throw new Error("Circle is full.");
     }
 
-    this.members.push(user);
+    this.members.push(user.id);
+  }
+
+  changeName(name: CircleName) {
+    if (!name) {
+      throw new Error("name cannot be null or undefined");
+    }
+
+    this.name = name;
   }
 }

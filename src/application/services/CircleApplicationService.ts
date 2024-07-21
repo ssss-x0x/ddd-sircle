@@ -1,7 +1,11 @@
 import { ICircleFactory } from "../factories";
 import { ICircleRepository, IUserRepository } from "../../domain/repositories";
 import { CircleService } from "../../domain/sevices";
-import { CircleCreateCommand, CircleJoinCommand } from "../commands";
+import {
+  CircleCreateCommand,
+  CircleJoinCommand,
+  CircleUpdateCommand,
+} from "../commands";
 import { CircleName, CircleId } from "../../domain/models";
 
 export class CircleApplicationService {
@@ -20,7 +24,7 @@ export class CircleApplicationService {
       },
     };
 
-    const owner = this.userRepository.findById(command.user.id);
+    const owner = this.userRepository.findById(command.userId);
 
     if (!owner) {
       throw new Error("UserNotFoundException");
@@ -31,6 +35,32 @@ export class CircleApplicationService {
 
     if (this.circleService.exists(circle)) {
       throw new Error("CircleAlreadyExistsException");
+    }
+
+    this.circleRepository.save(circle);
+
+    transaction.complete();
+  }
+
+  public update(command: CircleUpdateCommand) {
+    // トランザクションスコープの模倣
+    const transaction = {
+      complete: () => {
+        console.log("Transaction completed");
+      },
+    };
+
+    const id = new CircleId(command.circleId);
+
+    const circle = this.circleRepository.findById(id);
+
+    if (!circle) {
+      throw new Error("CircleNotFoundException");
+    }
+
+    if (command.circleName) {
+      const name = new CircleName(command.circleName);
+      circle.changeName(name);
     }
 
     this.circleRepository.save(circle);

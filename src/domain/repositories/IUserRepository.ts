@@ -1,5 +1,5 @@
-import { User } from "../models";
+import { User, UserId } from "../models";
 
 export interface IUserRepository {
-  findById(id: string): User | null;
+  findById(id: UserId): User | null;
 }

@@ -1,19 +1,19 @@
-import { User } from "../../domain/models";
+import { UserId } from "../../domain/models";
 
 export class CircleCreateCommand {
   name: string;
-  user: User;
+  userId: UserId;
 
-  constructor(user: User, name: string) {
+  constructor(userId: UserId, name: string) {
     if (!name) {
       throw new Error("name cannot be null or empty");
     }
 
-    if (!user) {
-      throw new Error("user cannot be null or empty");
+    if (!userId) {
+      throw new Error("userId cannot be null or empty");
     }
 
-    this.user = user;
+    this.userId = userId;
     this.name = name;
   }
 }
