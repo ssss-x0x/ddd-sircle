@@ -37,11 +37,23 @@ export class Circle {
     this.members = members;
   }
 
-  isFull(): boolean {
-    return this.members.length >= 29;
+  isFull() {
+    return this.countMembers() >= 30;
   }
 
-  join(user: User): void {
+  countMembers() {
+    return this.members.length + 1;
+  }
+
+  changeName(name: CircleName) {
+    if (!name) {
+      throw new Error("name cannot be null or undefined");
+    }
+
+    this.name = name;
+  }
+
+  join(user: User) {
     if (!user) {
       throw new Error("user cannot be null or undefined");
     }
@@ -55,13 +67,5 @@ export class Circle {
     }
 
     this.members.push(user.id);
-  }
-
-  changeName(name: CircleName) {
-    if (!name) {
-      throw new Error("name cannot be null or undefined");
-    }
-
-    this.name = name;
   }
 }
