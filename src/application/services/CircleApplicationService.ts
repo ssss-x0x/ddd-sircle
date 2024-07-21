@@ -59,13 +59,7 @@ export class CircleApplicationService {
       throw new Error("CircleNotFoundException");
     }
 
-    // FIXME: ドメインのルールがアプリケーションサービスに漏れているので修正するべき
-    // オーナーを含めてサークルメンバーは30人以内
-    if (circle.members.length >= 29) {
-      throw new Error("CircleFullException");
-    }
-
-    circle.members.push(member);
+    circle.join(member);
 
     this.circleRepository.save(circle);
 

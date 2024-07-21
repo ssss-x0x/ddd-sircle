@@ -33,4 +33,20 @@ export class Circle {
     this.owner = owner;
     this.members = members;
   }
+
+  join(user: User): void {
+    if (!user) {
+      throw new Error("user cannot be null or undefined");
+    }
+
+    if (this.members.some((member) => member.id === user.id)) {
+      throw new Error("User is already a member of this circle.");
+    }
+
+    if (this.members.length >= 29) {
+      throw new Error("Circle is full.");
+    }
+
+    this.members.push(user);
+  }
 }
