@@ -1,4 +1,4 @@
-import { Circle } from "../../domain/entities";
+import { Circle } from "../../domain/models";
 import { User, CircleName } from "../../domain/models";
 
 export interface ICircleFactory {

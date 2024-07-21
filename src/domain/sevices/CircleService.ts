@@ -1,5 +1,5 @@
 import { ICircleRepository } from "../../domain/repositories";
-import { Circle } from "../../domain/entities";
+import { Circle } from "../../domain/models";
 
 export class CircleService {
   private circleRepository: ICircleRepository;

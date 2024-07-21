@@ -1,6 +1,6 @@
-import { CircleId } from "../models";
-import { CircleName } from "../models";
-import { User } from "../models";
+import { CircleId } from ".";
+import { CircleName } from ".";
+import { User } from ".";
 
 /**
  * サークルを表現するエンティティ
@@ -9,7 +9,7 @@ export class Circle {
   public id: CircleId;
   public name: CircleName;
   public owner: User;
-  public members: User[];
+  private members: User[];
 
   constructor(id: CircleId, name: CircleName, owner: User, members: User[]) {
     if (!id) {
@@ -34,6 +34,10 @@ export class Circle {
     this.members = members;
   }
 
+  isFull(): boolean {
+    return this.members.length >= 29;
+  }
+
   join(user: User): void {
     if (!user) {
       throw new Error("user cannot be null or undefined");
@@ -43,7 +47,7 @@ export class Circle {
       throw new Error("User is already a member of this circle.");
     }
 
-    if (this.members.length >= 29) {
+    if (this.isFull()) {
       throw new Error("Circle is full.");
     }
 

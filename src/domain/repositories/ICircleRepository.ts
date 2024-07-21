@@ -1,5 +1,4 @@
-import { Circle } from "../entities";
-import { CircleId, CircleName } from "../models";
+import { Circle, CircleId, CircleName } from "../models";
 
 export interface ICircleRepository {
   save(circle: Circle): void;
